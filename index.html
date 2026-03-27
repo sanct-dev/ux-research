@@ -138,7 +138,7 @@
   .field-sublabel { font-size: 11px; color: var(--ink-muted); margin-bottom: 4px; font-style: italic; }
   .field-line { border: none; border-radius: 6px; width: 100%; padding: 8px 12px; font-size: 14px; font-family: 'Kaisei Opti', sans-serif; color: var(--ink); background: #ffffff; outline: none; transition: box-shadow 0.15s; }
   .field-line:focus { box-shadow: 0 0 0 2px var(--accent); }
-  .field-area { border: none; border-radius: 6px; width: 100%; padding: 8px 12px; font-size: 14px; font-family: 'Kaisei Opti', sans-serif; color: var(--ink); background: #ffffff; outline: none; resize: none; line-height: 2; transition: box-shadow 0.15s; display: block; }
+  .field-area { border: none; border-radius: 6px; width: 100%; padding: 8px 12px; font-size: 14px; font-family: 'Kaisei Opti', sans-serif; color: var(--ink); background: #ffffff; outline: none; resize: none; line-height: 1.7; transition: box-shadow 0.15s; display: block; }
   .field-area:focus { box-shadow: 0 0 0 2px var(--accent); }
   input::placeholder, textarea::placeholder { color: var(--ink-muted); font-weight: 300; opacity: 0.6; }
 
@@ -259,7 +259,7 @@
     resize: none;
     overflow: hidden;
     min-height: 40px;
-    line-height: 2;
+    line-height: 1.7;
     padding: 4px 0;
     transition: border-color 0.15s;
   }
@@ -535,37 +535,31 @@
   <div class="desk-wrap">
     <div class="desk-badge">Desk Research</div>
     <div class="desk-title">デスクリサーチノート</div>
-    <div class="desk-subtitle">PDFをドロップしてカードを登録する。<br>notes/ フォルダにPDFを置いておけば、カードからそのまま開けます。</div>
+    <div class="desk-subtitle">テーマごとにグループを作り、PDFをドロップして思考を記録する。</div>
 
-    <!-- ドロップゾーン -->
-    <div id="desk-dropzone"
-      ondragover="event.preventDefault();this.classList.add('drag-over')"
-      ondragleave="this.classList.remove('drag-over')"
-      ondrop="handleDeskDrop(event)">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-muted);margin-bottom:8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
-      <div style="font-size:13px;color:var(--ink-muted);">PDFをここにドロップ</div>
-      <div style="font-size:11px;color:var(--ink-muted);margin-top:4px;opacity:0.6;">notes/ フォルダに入っているPDFをドロップしてください</div>
-    </div>
+    <!-- グループ一覧 -->
+    <div id="desk-groups"></div>
 
-    <!-- カード一覧 -->
-    <div id="desk-cards" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;"></div>
+    <!-- グループ追加ボタン -->
+    <button onclick="addDeskGroup()" style="display:flex;align-items:center;gap:8px;background:transparent;border:1px dashed var(--border);border-radius:10px;padding:12px 20px;font-family:inherit;font-size:13px;color:var(--ink-muted);cursor:pointer;width:100%;margin-bottom:32px;transition:border-color 0.15s,color 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink-muted)'">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      テーマグループを追加
+    </button>
 
-    <!-- 考察メモ -->
-    <div style="margin-top:48px;border-top:1px dashed var(--border);padding-top:24px;">
-      <div style="font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">考察メモ</div>
-      <div style="font-size:11px;color:var(--ink-muted);margin-bottom:10px;">データを見て気づいたこと、仮説との照合、気になる点を自由に記録する</div>
-      <textarea id="desk-memo"
-        oninput="autoResizeMemo(this);saveDeskData()"
-        placeholder="例：直葬実施者の6割が後悔しているというデータは、仮説の「弔い不足」に直接つながる。ただしサンプルが首都圏限定なので地方では異なる可能性がある。"
-        style="width:100%;border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:14px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:60px;line-height:2;padding:4px 0;transition:border-color 0.15s;"
-        onfocus="this.style.borderBottomColor='var(--accent)'"
-        onblur="this.style.borderBottomColor='var(--rule)'"></textarea>
-    </div>
-
-    <!-- URL一覧 -->
-    <div id="desk-url-list-wrap" style="margin-top:32px;display:none;">
-      <div style="font-size:11px;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">URL一覧</div>
-      <div id="desk-url-list" style="font-size:12px;line-height:2.2;"></div>
+    <!-- 未分類ドロップゾーン -->
+    <div style="margin-bottom:40px;">
+      <div style="font-size:11px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">未分類</div>
+      <div id="desk-unclassified"
+        ondragover="event.preventDefault();this.classList.add('drag-over')"
+        ondragleave="this.classList.remove('drag-over')"
+        ondrop="handleUnclassifiedDrop(event)"
+        style="border:2px dashed var(--border);border-radius:12px;padding:20px;min-height:80px;transition:border-color 0.15s,background 0.15s;">
+        <div id="desk-unclassified-empty" style="text-align:center;color:var(--ink-muted);font-size:12px;padding:12px 0;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;display:block;margin:0 auto 6px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          PDFをここにドロップして追加
+        </div>
+        <div id="desk-unclassified-list"></div>
+      </div>
     </div>
 
   </div>
@@ -1116,10 +1110,10 @@ function confirmNewProject() {
   SHEET_ORDER.forEach(id => localStorage.removeItem('sheet_'+id));
   localStorage.removeItem('project_name');
   localStorage.removeItem('project_tagline');
-  localStorage.removeItem('desk_cards');
-  localStorage.removeItem('desk_memo');
-  deskCards = [];
-  deskMemo = '';
+  localStorage.removeItem('desk_groups');
+  localStorage.removeItem('desk_unclassified');
+  deskGroups = [];
+  deskUnclassified = [];
   document.getElementById('project-name').value='';
   document.getElementById('project-tagline').value='';
   location.reload();
@@ -1134,93 +1128,244 @@ function syncProjectName() {
 }
 
 // ===== DESK RESEARCH =====
-let deskCards = [];
-let deskMemo = '';
+let deskGroups = []; // [{ id, name, pdfs: [{title,filename,url}], memo }]
+let deskUnclassified = []; // [{title,filename,url}]
+let dragSrcGroupId = null;
+let dragSrcPdfIdx = null;
+
+function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
 
 function saveDeskData() {
-  const memo = document.getElementById('desk-memo');
-  if(memo) deskMemo = memo.value;
-  // カードの現在値を収集
-  document.querySelectorAll('.desk-card').forEach((el, i) => {
-    if(!deskCards[i]) return;
-    const inputs = el.querySelectorAll('input');
-    const textarea = el.querySelector('textarea');
-    if(inputs[0]) deskCards[i].title = inputs[0].value;
-    if(inputs[1]) deskCards[i].url = inputs[1].value;
-    if(textarea) deskCards[i].memo = textarea.value;
+  // グループのメモと各PDFタイトル・URLを収集
+  document.querySelectorAll('.dg-block').forEach(el => {
+    const gid = el.getAttribute('data-gid');
+    const g = deskGroups.find(g => g.id === gid);
+    if(!g) return;
+    const nameEl = el.querySelector('.dg-name-input');
+    if(nameEl) g.name = nameEl.value;
+    const memoEl = el.querySelector('.dg-memo');
+    if(memoEl) g.memo = memoEl.value;
+    el.querySelectorAll('.dp-item').forEach(pEl => {
+      const pidx = parseInt(pEl.getAttribute('data-pidx'));
+      if(!g.pdfs[pidx]) return;
+      const t = pEl.querySelector('.dp-title');
+      if(t) g.pdfs[pidx].title = t.value;
+    });
   });
-  localStorage.setItem('desk_cards', JSON.stringify(deskCards));
-  localStorage.setItem('desk_memo', deskMemo);
-  renderDeskUrlList();
+  localStorage.setItem('desk_groups', JSON.stringify(deskGroups));
+  localStorage.setItem('desk_unclassified', JSON.stringify(deskUnclassified));
 }
 
 function loadDeskData() {
-  const saved = localStorage.getItem('desk_cards');
-  if(saved) { try { deskCards = JSON.parse(saved); } catch(e){ deskCards = []; } }
-  const memo = localStorage.getItem('desk_memo');
-  if(memo) deskMemo = memo;
+  try { deskGroups = JSON.parse(localStorage.getItem('desk_groups')) || []; } catch(e){ deskGroups=[]; }
+  try { deskUnclassified = JSON.parse(localStorage.getItem('desk_unclassified')) || []; } catch(e){ deskUnclassified=[]; }
 }
 
-function renderDeskCards() {
-  const container = document.getElementById('desk-cards');
+function renderDesk() {
+  renderDeskGroups();
+  renderUnclassified();
+}
+
+function renderDeskGroups() {
+  const container = document.getElementById('desk-groups');
   if(!container) return;
-  container.innerHTML = deskCards.map((card, i) => `
-    <div class="desk-card" data-idx="${i}">
-      <button class="desk-card-delete" onclick="deleteDeskCard(${i})">×</button>
-      <div class="desk-card-title">
-        <input value="${escHtml(card.title)}" placeholder="タイトル（自由に入力）" oninput="saveDeskData()">
+  container.innerHTML = deskGroups.map(g => `
+    <div class="dg-block" data-gid="${g.id}" style="border:1px solid var(--border);border-radius:14px;margin-bottom:20px;background:var(--bg-sheet);overflow:hidden;">
+      <!-- グループヘッダー -->
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px 12px;border-bottom:1px solid var(--border);background:var(--bg-label);">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <input class="dg-name-input" value="${escHtml(g.name)}" placeholder="テーマ名を入力" oninput="saveDeskData()" style="border:none;background:transparent;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:15px;color:var(--ink);flex:1;font-weight:400;">
+        <button onclick="deleteDeskGroup('${g.id}')" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;font-size:18px;line-height:1;padding:0;opacity:0.4;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.4'">×</button>
       </div>
-      <div class="desk-card-row">
-        <span class="desk-card-label">PDF</span>
-        <span style="font-size:12px;color:var(--ink-light);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(card.filename)}</span>
-        <a class="desk-card-pdf-link" href="notes/${encodeURIComponent(card.filename)}" target="_blank">開く ↗</a>
+      <!-- 本体：左PDF一覧 / 右メモ -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:160px;">
+        <!-- 左：PDFリスト + ドロップゾーン -->
+        <div style="border-right:1px solid var(--border);padding:14px 16px;">
+          <div style="font-size:10px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">PDF / 資料</div>
+          <div class="dg-pdf-list" data-gid="${g.id}">
+            ${g.pdfs.map((p,i) => renderPdfItem(g.id, i, p)).join('')}
+          </div>
+          <div class="dg-dropzone" data-gid="${g.id}"
+            ondragover="event.preventDefault();this.classList.add('dz-over')"
+            ondragleave="this.classList.remove('dz-over')"
+            ondrop="handleGroupDrop(event,'${g.id}')"
+            style="border:1px dashed var(--border);border-radius:8px;padding:10px;text-align:center;font-size:11px;color:var(--ink-muted);cursor:pointer;margin-top:8px;transition:border-color 0.15s,background 0.15s;">
+            PDFをここにドロップ
+          </div>
+        </div>
+        <!-- 右：自由思考メモ -->
+        <div style="padding:14px 16px;display:flex;flex-direction:column;">
+          <div style="font-size:10px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px;">ここからわかること・気づき</div>
+          <textarea class="dg-memo" data-gid="${g.id}"
+            oninput="autoResizeMemo(this);saveDeskData()"
+            placeholder="このテーマのデータを読んで気づいたこと、仮説との照合、疑問——思考をそのまま書く"
+            style="border:none;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:13px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:120px;line-height:1.8;padding:0;flex:1;">${escHtml(g.memo||'')}</textarea>
+        </div>
       </div>
-      <div class="desk-card-row">
-        <span class="desk-card-label">URL</span>
-        <input class="desk-card-input" value="${escHtml(card.url)}" placeholder="元のウェブサイトURL" oninput="saveDeskData()">
-        ${card.url ? `<a href="${escHtml(card.url)}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none;white-space:nowrap;flex-shrink:0;">開く ↗</a>` : ''}
-      </div>
-      <div class="desk-card-row" style="align-items:flex-start;">
-        <span class="desk-card-label" style="margin-top:4px;">メモ</span>
-        <textarea class="desk-card-memo-input" placeholder="一言メモ" oninput="autoResizeMemo(this);saveDeskData()">${escHtml(card.memo||'')}</textarea>
-      </div>
-    </div>`).join('');
-  // メモのテキストエリア高さを復元
-  container.querySelectorAll('textarea').forEach(el => {
+    </div>
+  `).join('');
+
+  // メモ高さ復元
+  container.querySelectorAll('.dg-memo').forEach(el => {
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   });
-  renderDeskUrlList();
-}
 
-function renderDeskUrlList() {
-  const wrap = document.getElementById('desk-url-list-wrap');
-  const list = document.getElementById('desk-url-list');
-  if(!wrap || !list) return;
-  const urls = deskCards.filter(c => c.url).map(c =>
-    `<div><a href="${escHtml(c.url)}" target="_blank" style="color:var(--accent);text-decoration:none;">${escHtml(c.title||c.url)}</a> <span style="color:var(--ink-muted);font-size:11px;">${escHtml(c.url)}</span></div>`
-  ).join('');
-  if(urls) { wrap.style.display='block'; list.innerHTML = urls; }
-  else { wrap.style.display='none'; }
-}
-
-function deleteDeskCard(i) {
-  deskCards.splice(i, 1);
-  saveDeskData();
-  renderDeskCards();
-}
-
-function handleDeskDrop(event) {
-  event.preventDefault();
-  document.getElementById('desk-dropzone').classList.remove('drag-over');
-  const files = Array.from(event.dataTransfer.files).filter(f => f.name.endsWith('.pdf'));
-  if(!files.length) return;
-  files.forEach(f => {
-    deskCards.push({ title: f.name.replace('.pdf',''), filename: f.name, url: '', memo: '' });
+  // PDFドラッグ設定
+  container.querySelectorAll('.dp-item').forEach(el => {
+    el.setAttribute('draggable', 'true');
+    el.addEventListener('dragstart', e => {
+      dragSrcGroupId = el.closest('.dg-block').getAttribute('data-gid');
+      dragSrcPdfIdx = parseInt(el.getAttribute('data-pidx'));
+      e.dataTransfer.effectAllowed = 'move';
+    });
   });
-  saveDeskData();
-  renderDeskCards();
 }
+
+function renderPdfItem(gid, idx, p) {
+  return `<div class="dp-item" data-gid="${gid}" data-pidx="${idx}"
+    style="display:flex;align-items:center;gap:8px;padding:6px 4px;border-bottom:1px solid var(--rule);">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-muted);flex-shrink:0;cursor:grab;"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+    <input class="dp-title" value="${escHtml(p.title)}" oninput="saveDeskData()" style="border:none;background:transparent;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:12px;color:var(--ink);flex:1;min-width:0;">
+    <a href="notes/${encodeURIComponent(p.filename)}" target="_blank" style="font-size:10px;color:var(--accent);text-decoration:none;white-space:nowrap;flex-shrink:0;">開く↗</a>
+    <button onclick="deletePdfFromGroup('${gid}',${idx})" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;font-size:14px;padding:0;line-height:1;opacity:0.4;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.4'">×</button>
+  </div>`;
+}
+
+function renderUnclassified() {
+  const list = document.getElementById('desk-unclassified-list');
+  const empty = document.getElementById('desk-unclassified-empty');
+  if(!list) return;
+  if(deskUnclassified.length === 0) {
+    list.innerHTML = '';
+    if(empty) empty.style.display = 'block';
+    return;
+  }
+  if(empty) empty.style.display = 'none';
+  list.innerHTML = deskUnclassified.map((p,i) => `
+    <div class="dp-item du-item" data-uidx="${i}" draggable="true"
+      style="display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid var(--rule);">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink-muted);flex-shrink:0;cursor:grab;"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <input value="${escHtml(p.title)}" oninput="deskUnclassified[${i}].title=this.value;saveDeskData()" style="border:none;background:transparent;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:13px;color:var(--ink);flex:1;">
+      <a href="notes/${encodeURIComponent(p.filename)}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none;">開く↗</a>
+      <button onclick="deleteUnclassified(${i})" style="background:none;border:none;color:var(--ink-muted);cursor:pointer;font-size:16px;padding:0;opacity:0.4;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.4'">×</button>
+    </div>`).join('');
+
+  // 未分類からのドラッグ設定
+  list.querySelectorAll('.du-item').forEach(el => {
+    el.addEventListener('dragstart', e => {
+      dragSrcGroupId = '__unclassified__';
+      dragSrcPdfIdx = parseInt(el.getAttribute('data-uidx'));
+      e.dataTransfer.effectAllowed = 'move';
+    });
+  });
+}
+
+function addDeskGroup() {
+  saveDeskData();
+  deskGroups.push({ id: genId(), name: '', pdfs: [], memo: '' });
+  saveDeskData();
+  renderDesk();
+}
+
+function deleteDeskGroup(gid) {
+  saveDeskData();
+  const g = deskGroups.find(g => g.id === gid);
+  if(g && g.pdfs.length > 0) {
+    deskUnclassified.push(...g.pdfs);
+  }
+  deskGroups = deskGroups.filter(g => g.id !== gid);
+  saveDeskData();
+  renderDesk();
+}
+
+function deletePdfFromGroup(gid, idx) {
+  saveDeskData();
+  const g = deskGroups.find(g => g.id === gid);
+  if(!g) return;
+  g.pdfs.splice(idx, 1);
+  saveDeskData();
+  renderDesk();
+}
+
+function deleteUnclassified(idx) {
+  deskUnclassified.splice(idx, 1);
+  saveDeskData();
+  renderUnclassified();
+}
+
+function handleGroupDrop(event, gid) {
+  event.preventDefault();
+  event.stopPropagation();
+  event.currentTarget.classList.remove('dz-over');
+  saveDeskData();
+
+  // 新しいPDFファイルのドロップ
+  const files = Array.from(event.dataTransfer.files).filter(f => f.name.endsWith('.pdf'));
+  if(files.length > 0) {
+    const g = deskGroups.find(g => g.id === gid);
+    if(!g) return;
+    files.forEach(f => g.pdfs.push({ title: f.name.replace('.pdf',''), filename: f.name }));
+    saveDeskData();
+    renderDesk();
+    return;
+  }
+
+  // 既存PDFの移動
+  if(dragSrcGroupId !== null && dragSrcPdfIdx !== null) {
+    let pdf;
+    if(dragSrcGroupId === '__unclassified__') {
+      pdf = deskUnclassified.splice(dragSrcPdfIdx, 1)[0];
+    } else {
+      const srcG = deskGroups.find(g => g.id === dragSrcGroupId);
+      if(srcG) pdf = srcG.pdfs.splice(dragSrcPdfIdx, 1)[0];
+    }
+    if(pdf) {
+      const g = deskGroups.find(g => g.id === gid);
+      if(g) g.pdfs.push(pdf);
+    }
+    dragSrcGroupId = null; dragSrcPdfIdx = null;
+    saveDeskData();
+    renderDesk();
+  }
+}
+
+function handleUnclassifiedDrop(event) {
+  event.preventDefault();
+  event.currentTarget.classList.remove('drag-over');
+  saveDeskData();
+
+  // 新しいPDFファイルのドロップ
+  const files = Array.from(event.dataTransfer.files).filter(f => f.name.endsWith('.pdf'));
+  if(files.length > 0) {
+    files.forEach(f => deskUnclassified.push({ title: f.name.replace('.pdf',''), filename: f.name }));
+    saveDeskData();
+    renderUnclassified();
+    return;
+  }
+
+  // 既存PDFの移動（グループから未分類へ）
+  if(dragSrcGroupId !== null && dragSrcPdfIdx !== null) {
+    let pdf;
+    if(dragSrcGroupId === '__unclassified__') {
+      // 未分類内での移動は無視
+    } else {
+      const srcG = deskGroups.find(g => g.id === dragSrcGroupId);
+      if(srcG) {
+        pdf = srcG.pdfs.splice(dragSrcPdfIdx, 1)[0];
+        if(pdf) deskUnclassified.push(pdf);
+      }
+    }
+    dragSrcGroupId = null; dragSrcPdfIdx = null;
+    saveDeskData();
+    renderDesk();
+  }
+}
+
+// dz-over スタイル
+const dzStyle = document.createElement('style');
+dzStyle.textContent = '.dz-over { border-color: var(--accent) !important; background: var(--accent-light) !important; }';
+document.head.appendChild(dzStyle);
 
 function escHtml(str) {
   if(!str) return '';
@@ -1236,13 +1381,7 @@ function showDesk() {
   closeNav();
   window.scrollTo(0,0);
   loadDeskData();
-  renderDeskCards();
-  const memo = document.getElementById('desk-memo');
-  if(memo) {
-    memo.value = deskMemo;
-    memo.style.height = 'auto';
-    memo.style.height = memo.scrollHeight + 'px';
-  }
+  renderDesk();
 }
 
 function autoResizeMemo(el) {
@@ -1337,7 +1476,7 @@ function saveProject() {
     if(saved) { try { allData[id]=JSON.parse(saved); } catch(e){} }
   });
   saveDeskData();
-  const json = JSON.stringify({ project: projectName, tagline, savedAt: dateStr+' '+timeStr.replace('-',':'), sheets: allData, deskCards, deskMemo }, null, 2);
+  const json = JSON.stringify({ project: projectName, tagline, savedAt: dateStr+' '+timeStr.replace('-',':'), sheets: allData, deskGroups, deskUnclassified }, null, 2);
   const blob = new Blob([json], { type: 'application/json' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -1355,8 +1494,8 @@ function loadProject(event) {
       if(data.project) { document.getElementById('project-name').value=data.project; localStorage.setItem('project_name', data.project); }
       if(data.tagline) document.getElementById('project-tagline').value=data.tagline;
       if(data.sheets) Object.keys(data.sheets).forEach(id => localStorage.setItem('sheet_'+id, JSON.stringify(data.sheets[id])));
-      if(data.deskCards) { localStorage.setItem('desk_cards', JSON.stringify(data.deskCards)); }
-      if(data.deskMemo !== undefined) { localStorage.setItem('desk_memo', data.deskMemo); }
+      if(data.deskGroups) { localStorage.setItem('desk_groups', JSON.stringify(data.deskGroups)); }
+      if(data.deskUnclassified) { localStorage.setItem('desk_unclassified', JSON.stringify(data.deskUnclassified)); }
       alert('「'+(data.project||'プロジェクト')+'」を読み込みました。');
     } catch(e) { alert('読み込みに失敗しました。'); }
   };
