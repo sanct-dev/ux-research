@@ -1,0 +1,58 @@
+{
+  "project": "リサーチ",
+  "tagline": "",
+  "savedAt": "2026-03-27 10:28",
+  "sheets": {},
+  "deskGroups": [
+    {
+      "id": "mn87x2ddb0f",
+      "name": "墓地不足について",
+      "pdfs": [
+        {
+          "title": "都市部における墓地不足について",
+          "filename": "都市部における墓地不足について.pdf"
+        }
+      ],
+      "memo": ""
+    },
+    {
+      "id": "mn87xd0bvl7",
+      "name": "墓じまいに関する意識調査",
+      "pdfs": [
+        {
+          "title": "墓じまいに関する考察",
+          "filename": "墓じまいに関する考察.pdf"
+        },
+        {
+          "title": "墓じまいは増えているのか",
+          "filename": "墓じまい実態調査.pdf"
+        },
+        {
+          "title": "墓じまい実態調査",
+          "filename": "お墓に関する意識調査.pdf"
+        },
+        {
+          "title": "お墓に関する意識調査",
+          "filename": "お墓に関する意識調査.pdf"
+        }
+      ],
+      "memo": ""
+    },
+    {
+      "id": "mn87y1itci4",
+      "name": "お墓に誰が入る？家族のお墓事情",
+      "pdfs": [
+        {
+          "title": "お墓には誰が入れるのか02",
+          "filename": "お墓には誰が入れるのか02.pdf"
+        },
+        {
+          "title": "先祖代々の墓に入るのか",
+          "filename": "先祖代々の墓に入るのか.pdf"
+        }
+      ],
+      "memo": ""
+    }
+  ],
+  "deskUnclassified": []
+}

@@ -1523,6 +1523,21 @@ window.addEventListener('DOMContentLoaded', () => {
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
+
+  // 初回訪問時のみdefault.jsonを自動読み込み
+  if(!localStorage.getItem('default_loaded')) {
+    fetch('default.json')
+      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
+      .then(data => {
+        if(data.project) { document.getElementById('project-name').value=data.project; localStorage.setItem('project_name', data.project); }
+        if(data.tagline) { document.getElementById('project-tagline').value=data.tagline; }
+        if(data.sheets) Object.keys(data.sheets).forEach(id => localStorage.setItem('sheet_'+id, JSON.stringify(data.sheets[id])));
+        if(data.deskGroups) localStorage.setItem('desk_groups', JSON.stringify(data.deskGroups));
+        if(data.deskUnclassified) localStorage.setItem('desk_unclassified', JSON.stringify(data.deskUnclassified));
+        localStorage.setItem('default_loaded', '1');
+      })
+      .catch(() => {});
+  }
 });
 </script>
 </body>
