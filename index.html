@@ -67,6 +67,39 @@
   .sidebar-link:hover, .sidebar-link.active { background: rgba(255,255,255,0.1); color: #fff; }
   .sidebar-step-num { display: inline-block; width: 20px; font-family: 'Montserrat', sans-serif; font-size: 11px; color: rgba(255,255,255,0.4); margin-right: 4px; }
 
+  .sidebar-item { display: block; position: relative; }
+  .sidebar-item .sidebar-link { display: block; padding-right: 32px; }
+  .sidebar-expand-btn {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 32px;
+    background: none; border: none;
+    color: rgba(255,255,255,0.25);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.15s;
+  }
+  .sidebar-expand-btn svg { transition: transform 0.2s ease; display: block; }
+  .sidebar-expand-btn:hover { color: rgba(255,255,255,0.7); }
+  .sidebar-expand-btn.open { color: rgba(255,255,255,0.6); }
+  .sidebar-expand-btn.open svg { transform: rotate(180deg); }
+  .sidebar-sub {
+    display: none;
+    background: rgba(0,0,0,0.2);
+  }
+  .sidebar-sub.open { display: block; }
+  .sidebar-sub-link {
+    display: block;
+    padding: 7px 24px 7px 44px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .sidebar-sub-link:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8); }
+
   /* ===== HOME ===== */
   #home { max-width: 720px; margin: 0 auto; }
   #home.hidden { display: none; }
@@ -404,10 +437,199 @@
     font-size: 13px;
     line-height: 2;
   }
+
+  /* ===== USER SORT MODAL ===== */
+  .usm-textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    outline: none;
+    font-family: 'Kaisei Opti', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+    background: transparent;
+    resize: none;
+    overflow: hidden;
+    min-height: 72px;
+    line-height: 1.55;
+    padding: 4px 0;
+    transition: border-color 0.15s;
+  }
+  .usm-textarea:focus { border-bottom-color: var(--accent); }
+  .usm-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    outline: none;
+    font-family: 'Kaisei Opti', sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    background: transparent;
+    padding: 4px 0;
+    transition: border-color 0.15s;
+  }
+  .usm-input:focus { border-bottom-color: var(--accent); }
+  .usm-group-tag {
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+
+  .usm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+  .usm-table th {
+    text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--border);
+    padding: 5px 6px;
+    font-weight: 400;
+  }
+  .usm-table td {
+    border-bottom: 1px solid var(--rule);
+    padding: 4px 2px;
+    vertical-align: top;
+  }
+  .usm-table td input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Kaisei Opti', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+    background: transparent;
+    padding: 3px 4px;
+    line-height: 1.4;
+  }
+  .usm-table td input:focus {
+    background: var(--accent-light);
+    border-radius: 3px;
+  }
+  .usm-del-row {
+    background: none;
+    border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 2px;
+    opacity: 0.3;
+    line-height: 1;
+  }
+  .usm-del-row:hover { opacity: 1; }
+  .usm-add-row {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 11px;
+    color: var(--ink-muted);
+    cursor: pointer;
+    padding: 4px 2px;
+    letter-spacing: 0.03em;
+  }
+  .usm-add-row:hover { color: var(--accent); }
+
+  .usp-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .usp-card-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .usp-card-cell {
+    padding: 6px 10px;
+  }
+  .usp-card-cell:first-child {
+    border-right: 1px solid var(--border);
+  }
+  .usp-card-cell-label {
+    font-size: 9px;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 3px;
+  }
+  .usp-card-cell input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Kaisei Opti', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+    background: transparent;
+    padding: 0;
+  }
+  .usp-card-bottom {
+    padding: 8px 10px;
+    position: relative;
+  }
+  .usp-card-bottom textarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Kaisei Opti', sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+    background: transparent;
+    resize: none;
+    overflow: hidden;
+    min-height: 40px;
+    line-height: 1.5;
+    padding: 0;
+  }
+  .usp-card-del {
+    position: absolute;
+    top: 6px; right: 8px;
+    background: none; border: none;
+    color: var(--ink-muted);
+    cursor: pointer;
+    font-size: 13px;
+    opacity: 0.3;
+    line-height: 1;
+    padding: 0;
+  }
+  .usp-card-del:hover { opacity: 1; }
+
+  .usm-col2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .usm-col-block {
+    min-width: 0;
+  }
+  .usm-section-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+  }
+  .usm-field-label {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
 </style>
 </head>
 <body>
 
+<!-- ===== ユーザー整理モーダル ===== -->
 <div id="overlay" onclick="closeNav()"></div>
 <div id="print-header">
   <span id="print-project-name"></span>
@@ -457,7 +679,15 @@
   </div>
   <div class="sidebar-section">
     <div class="sidebar-section-title">準備</div>
-    <a class="sidebar-link" onclick="showSheet('s00')"><span class="sidebar-step-num">00</span>仮説の構造化</a>
+    <div class="sidebar-item">
+      <a class="sidebar-link" onclick="showSheet('s00')"><span class="sidebar-step-num">00</span>仮説の構造化</a>
+      <button class="sidebar-expand-btn" onclick="toggleSidebarSub(this)" title="拡散シート">
+        <svg viewBox="0 0 10 6" width="10" height="6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,1 5,5 9,1"/></svg>
+      </button>
+      <div class="sidebar-sub">
+        <a class="sidebar-sub-link" onclick="showUsersortPage()">ユーザー拡散</a>
+      </div>
+    </div>
     <a class="sidebar-link" onclick="showSheet('s01')"><span class="sidebar-step-num">01</span>リサーチ計画</a>
     <a class="sidebar-link" onclick="showSheet('s02')"><span class="sidebar-step-num">02</span>インタビューガイド</a>
     <a class="sidebar-link" onclick="showSheet('s03')"><span class="sidebar-step-num">03</span>プロトペルソナ</a>
@@ -511,33 +741,7 @@
         style="border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:14px;color:var(--ink-light);background:transparent;width:100%;text-align:left;padding:8px 0;line-height:2;resize:none;overflow:hidden;min-height:44px;"></textarea>
     </div>
 
-    <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">プロジェクトを保存する</button>
-    <div style="margin-top:10px;font-size:11px;color:var(--ink-muted);line-height:1.7;">入力内容をファイルに書き出します。次回は「読み込む」から再開できます。</div>
-
-    <!-- スマホ用ナビゲーション -->
-    <div id="mobile-nav" style="display:none;margin-top:48px;border-top:1px solid var(--border);padding-top:32px;text-align:left;">
-      <div style="font-size:11px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">メニュー</div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <button onclick="showDesk()" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-          デスクリサーチノート
-        </button>
-        <button onclick="showSheet('s00')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">00</span>仮説の構造化</button>
-        <button onclick="showSheet('s01')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">01</span>リサーチ計画</button>
-        <button onclick="showSheet('s02')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">02</span>インタビューガイド</button>
-        <button onclick="showSheet('s03')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">03</span>プロトペルソナ</button>
-        <button onclick="showSheet('s04')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">04</span>インタビュー記録</button>
-        <button onclick="showSheet('s05')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">05</span>アフィニティダイアグラム</button>
-        <button onclick="showSheet('s06')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">06</span>セグメント分析</button>
-        <button onclick="showSheet('s07')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">07</span>ペルソナ（完成版）</button>
-        <button onclick="showSheet('s08')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">08</span>カスタマージャーニーマップ</button>
-        <button onclick="showSheet('s09')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">09</span>価値マップ</button>
-        <button onclick="showSheet('s10')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">10</span>インサイトの整理</button>
-        <button onclick="showSheet('s11')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">11</span>HMW問い・アイデア発散</button>
-        <button onclick="showSheet('s12')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">12</span>アイデアの収束・選定</button>
-        <button onclick="showSheet('s13')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">13</span>ユーザーストーリーマップ</button>
-      </div>
-    </div>
+    <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">保存する</button>
 
   </div>
 </div>
@@ -588,6 +792,81 @@
       </div>
     </div>
 
+    <!-- 総じて感じること -->
+    <div style="margin-top:12px;margin-bottom:48px;border-top:1px solid var(--border);padding-top:24px;">
+      <div style="font-size:10px;color:var(--ink-muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">総じて感じること</div>
+      <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px;line-height:1.5;">すべてのデータを通読したあと、全体として何を感じたか——論理でなくていい、直感のままに残す</div>
+      <textarea id="desk-overall-memo"
+        oninput="autoResizeMemo(this);saveDeskOverall()"
+        placeholder="例：どの資料を読んでも〜という感覚が残った。数字には出ていないが〜のような気がする。"
+        style="width:100%;border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:11px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:80px;line-height:1.5;padding:4px 0;transition:border-color 0.15s;"
+        onfocus="this.style.borderBottomColor='var(--accent)'" onblur="this.style.borderBottomColor='var(--rule)'"></textarea>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== 拡散ページ ===== -->
+<div id="usersort-page" style="display:none;">
+  <div class="print-bar">
+    <button class="btn btn-ghost" onclick="closeUsersortPage()">← 仮説の構造化に戻る</button>
+  </div>
+  <div class="desk-wrap" style="max-width:720px;margin-left:auto;margin-right:auto;">
+    <div class="desk-title">ユーザーを整理する</div>
+    <div class="desk-subtitle">思い込みでいい。書き散らかして、資料を見ながら上書きする。</div>
+
+    <!-- グループ名 -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;">
+      <div>
+        <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Group A</div>
+        <input id="usp-group-a" class="usm-input" placeholder="グループ名（例：親世代）" oninput="saveUsersortData()" style="font-size:14px;">
+      </div>
+      <div>
+        <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:6px;">Group B</div>
+        <input id="usp-group-b" class="usm-input" placeholder="グループ名（例：子世代）" oninput="saveUsersortData()" style="font-size:14px;">
+      </div>
+    </div>
+
+    <!-- 見えてきた人 -->
+    <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:12px;">見えてきた人</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:36px;align-items:start;">
+      <div>
+        <div id="usp-body-a"></div>
+        <button class="usm-add-row" onclick="addUspRow('a')">＋ 追加</button>
+      </div>
+      <div>
+        <div id="usp-body-b"></div>
+        <button class="usm-add-row" onclick="addUspRow('b')">＋ 追加</button>
+      </div>
+    </div>
+
+    <!-- 仮説を構造化する -->
+    <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:12px;">仮説を構造化する</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
+      <div style="border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <div style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;" id="usp-label-a">グループ A</div>
+        <div style="font-size:10px;color:var(--accent);margin-bottom:4px;">状況</div>
+        <textarea id="usp-situation-a" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="おそらくこのユーザーは、こういう状況にいるのではないか"></textarea>
+        <div style="font-size:10px;color:var(--accent);margin:12px 0 4px;">課題</div>
+        <textarea id="usp-problem-a" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="こういう課題・不満・障壁を抱えているのではないか"></textarea>
+        <div style="font-size:10px;color:var(--accent);margin:12px 0 4px;">原因の仮説</div>
+        <textarea id="usp-cause-a" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="なぜそうなっているのか"></textarea>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <div style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.08em;color:var(--accent);text-transform:uppercase;margin-bottom:14px;" id="usp-label-b">グループ B</div>
+        <div style="font-size:10px;color:var(--accent);margin-bottom:4px;">状況</div>
+        <textarea id="usp-situation-b" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="おそらくこのユーザーは、こういう状況にいるのではないか"></textarea>
+        <div style="font-size:10px;color:var(--accent);margin:12px 0 4px;">課題</div>
+        <textarea id="usp-problem-b" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="こういう課題・不満・障壁を抱えているのではないか"></textarea>
+        <div style="font-size:10px;color:var(--accent);margin:12px 0 4px;">原因の仮説</div>
+        <textarea id="usp-cause-b" class="usm-textarea" oninput="autoResizeMemo(this);saveUsersortData()" placeholder="なぜそうなっているのか"></textarea>
+      </div>
+    </div>
+
+    <!-- 反映ボタン -->
+    <div style="margin-top:32px;display:flex;justify-content:flex-end;">
+      <button class="btn" onclick="applyUsersortPage()" style="font-size:12px;padding:10px 24px;">仮説の構造化シートに反映する</button>
+    </div>
   </div>
 </div>
 
@@ -648,17 +927,20 @@ ${field('探求する問い（このリサーチで何を明らかにしたい�
 ${field('なぜこの問いを立てるのか（問いの背景・動機）', 2)}
 
 <div class="section-title">仮説を構造化する</div>
-<div class="note-box">3つのパーツで仮説を組み立てる。「状況」「課題」「原因の仮説」。左：親世代 / 右：子世代。</div>
+<div class="note-box" style="display:flex;align-items:center;justify-content:space-between;gap:16px;">
+  <span>3つのパーツで仮説を組み立てる。「状況」「課題」「原因の仮説」。まずユーザーグループを整理してから記入する。</span>
+  <button onclick="showUsersortPage()" style="flex-shrink:0;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;letter-spacing:0.05em;">ユーザーを整理する →</button>
+</div>
 
 <div class="grid-2" style="gap:32px;align-items:start;">
   <div style="border:1px solid var(--border);border-radius:12px;padding:20px;">
-    <div style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">親世代（墓じまいしたい側）</div>
+    <div id="s00-label-a" style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">グループ A</div>
     ${field('状況：おそらくこのユーザーは、こういう状況にいるのではないか', 3, '例：お墓の維持が負担で、子に迷惑をかけたくないと考えている')}
     ${field('課題：こういう課題・不満・障壁を抱えているのではないか', 3, '例：手放したいが、先祖への申し訳なさや親戚の反対が壁になっている')}
     ${field('原因の仮説：なぜそうなっているのか', 3, '例：弔いの場所と気持ちの区切りが切り離せないものとして刷り込まれているから')}
   </div>
   <div style="border:1px solid var(--border);border-radius:12px;padding:20px;">
-    <div style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">子世代（残される側）</div>
+    <div id="s00-label-b" style="font-size:11px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;">グループ B</div>
     ${field('状況：おそらくこのユーザーは、こういう状況にいるのではないか', 3, '例：親の判断を受け取る立場にあり、自分の気持ちを言語化する機会がない')}
     ${field('課題：こういう課題・不満・障壁を抱えているのではないか', 3, '例：手放されて困るのか助かるのか、自分でもまだわかっていない')}
     ${field('原因の仮説：なぜそうなっているのか', 3, '例：弔いに関する世代間の対話がなく、親の論理だけで動いているから')}
@@ -1187,6 +1469,20 @@ function loadDeskData() {
   try { deskUnclassified = JSON.parse(localStorage.getItem('desk_unclassified')) || []; } catch(e){ deskUnclassified=[]; }
 }
 
+function saveDeskOverall() {
+  const el = document.getElementById('desk-overall-memo');
+  if(el) localStorage.setItem('desk_overall_memo', el.value);
+}
+
+function loadDeskOverall() {
+  const el = document.getElementById('desk-overall-memo');
+  if(!el) return;
+  const saved = localStorage.getItem('desk_overall_memo') || '';
+  el.value = saved;
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
+}
+
 function renderDesk() {
   renderDeskGroups();
   renderUnclassified();
@@ -1225,7 +1521,7 @@ function renderDeskGroups() {
           <textarea class="dg-memo" data-gid="${g.id}"
             oninput="autoResizeMemo(this);saveDeskData()"
             placeholder="このテーマのデータを読んで気づいたこと、仮説との照合、疑問——思考をそのまま書く"
-            style="border:none;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:13px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:120px;line-height:1.8;padding:0;flex:1;">${escHtml(g.memo||'')}</textarea>
+            style="border:none;outline:none;font-family:'Kaisei Opti',sans-serif;font-size:11px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:120px;line-height:1.5;padding:0;flex:1;">${escHtml(g.memo||'')}</textarea>
         </div>
       </div>
     </div>
@@ -1398,16 +1694,264 @@ function escHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// ===== サイドバー展開トグル =====
+function toggleSidebarSub(btn) {
+  const sub = btn.nextElementSibling;
+  const isOpen = sub.classList.contains('open');
+  // 全部閉じる
+  document.querySelectorAll('.sidebar-sub.open').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.sidebar-expand-btn.open').forEach(b => b.classList.remove('open'));
+  if(!isOpen) {
+    sub.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+// ===== 拡散ページ =====
+function hideAllViews() {
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('sheet-view').classList.remove('active');
+  document.getElementById('desk-view').classList.remove('active');
+  document.getElementById('usersort-page').style.display = 'none';
+}
+
+function uspRowHtml(group, idx, r) {
+  return `<div class="usp-card">
+    <div class="usp-card-top">
+      <div class="usp-card-cell">
+        <div class="usp-card-cell-label">属性</div>
+        <input value="${escHtml(r.attr||'')}" oninput="uspEdit('${group}',${idx},'attr',this.value)" placeholder="例：70代女性">
+      </div>
+      <div class="usp-card-cell">
+        <div class="usp-card-cell-label">環境</div>
+        <input value="${escHtml(r.env||'')}" oninput="uspEdit('${group}',${idx},'env',this.value)" placeholder="例：子なし、地方">
+      </div>
+    </div>
+    <div class="usp-card-bottom">
+      <textarea oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';uspEdit('${group}',${idx},'thought',this.value)" placeholder="思考・感情・行動の仮説を自由に…" style="padding-right:20px;">${escHtml(r.thought||'')}</textarea>
+      <button class="usp-card-del" onclick="delUspRow('${group}',${idx})">×</button>
+    </div>
+  </div>`;
+}
+
+function renderUspTable(group) {
+  const rows = group === 'a' ? usersortData.rowsA : usersortData.rowsB;
+  const container = document.getElementById(`usp-body-${group}`);
+  if(!container) return;
+  container.innerHTML = rows.map((r,i) => uspRowHtml(group, i, r)).join('');
+  // textarea高さ復元
+  container.querySelectorAll('textarea').forEach(el => {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  });
+}
+
+function addUspRow(group) {
+  if(group === 'a') usersortData.rowsA.push({attr:'',env:'',thought:''});
+  else              usersortData.rowsB.push({attr:'',env:'',thought:''});
+  renderUspTable(group);
+  saveUsersortData();
+  const tbody = document.getElementById(`usp-body-${group}`);
+  if(tbody) { const last = tbody.lastElementChild; if(last) last.querySelector('input').focus(); }
+}
+
+function delUspRow(group, idx) {
+  if(group === 'a') usersortData.rowsA.splice(idx,1);
+  else              usersortData.rowsB.splice(idx,1);
+  renderUspTable(group);
+  saveUsersortData();
+}
+
+function uspEdit(group, idx, field, val) {
+  const rows = group === 'a' ? usersortData.rowsA : usersortData.rowsB;
+  if(rows[idx]) rows[idx][field] = val;
+  saveUsersortData();
+}
+
+function showUsersortPage() {
+  try { usersortData = JSON.parse(localStorage.getItem('usersort_data')) || usersortData; } catch(e){}
+  if(!usersortData.rowsA || usersortData.rowsA.length===0) usersortData.rowsA = [{attr:'',env:'',thought:''}];
+  if(!usersortData.rowsB || usersortData.rowsB.length===0) usersortData.rowsB = [{attr:'',env:'',thought:''}];
+  hideAllViews();
+  document.getElementById('usersort-page').style.display = 'block';
+  // フィールド復元
+  document.getElementById('usp-group-a').value     = usersortData.groupA     || '';
+  document.getElementById('usp-group-b').value     = usersortData.groupB     || '';
+  document.getElementById('usp-situation-a').value = usersortData.situationA || '';
+  document.getElementById('usp-problem-a').value   = usersortData.problemA   || '';
+  document.getElementById('usp-cause-a').value     = usersortData.causeA     || '';
+  document.getElementById('usp-situation-b').value = usersortData.situationB || '';
+  document.getElementById('usp-problem-b').value   = usersortData.problemB   || '';
+  document.getElementById('usp-cause-b').value     = usersortData.causeB     || '';
+  // ラベル更新
+  const la = document.getElementById('usp-label-a');
+  const lb = document.getElementById('usp-label-b');
+  if(la) la.textContent = usersortData.groupA || 'グループ A';
+  if(lb) lb.textContent = usersortData.groupB || 'グループ B';
+  // textarea高さ復元
+  ['usp-situation-a','usp-problem-a','usp-cause-a','usp-situation-b','usp-problem-b','usp-cause-b'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && el.value){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+  });
+  renderUspTable('a');
+  renderUspTable('b');
+  closeNav();
+  window.scrollTo(0,0);
+}
+
+function closeUsersortPage() {
+  saveUsersortData();
+  showSheet('s00');
+}
+
+function applyUsersortPage() {
+  // グループ名・仮説を usersortData に同期
+  usersortData.groupA     = document.getElementById('usp-group-a')?.value     || '';
+  usersortData.groupB     = document.getElementById('usp-group-b')?.value     || '';
+  usersortData.situationA = document.getElementById('usp-situation-a')?.value || '';
+  usersortData.problemA   = document.getElementById('usp-problem-a')?.value   || '';
+  usersortData.causeA     = document.getElementById('usp-cause-a')?.value     || '';
+  usersortData.situationB = document.getElementById('usp-situation-b')?.value || '';
+  usersortData.problemB   = document.getElementById('usp-problem-b')?.value   || '';
+  usersortData.causeB     = document.getElementById('usp-cause-b')?.value     || '';
+  saveUsersortData();
+  // s00に反映してそのまま遷移
+  showSheet('s00');
+  // ラベルと仮説欄を上書き
+  const la = document.getElementById('s00-label-a');
+  const lb = document.getElementById('s00-label-b');
+  if(la) la.textContent = usersortData.groupA || 'グループ A';
+  if(lb) lb.textContent = usersortData.groupB || 'グループ B';
+  const fields = document.querySelectorAll('#sheet-content .field-area');
+  if(fields[2]) { fields[2].value = usersortData.situationA; autoResizeMemo(fields[2]); }
+  if(fields[3]) { fields[3].value = usersortData.problemA;   autoResizeMemo(fields[3]); }
+  if(fields[4]) { fields[4].value = usersortData.causeA;     autoResizeMemo(fields[4]); }
+  if(fields[5]) { fields[5].value = usersortData.situationB; autoResizeMemo(fields[5]); }
+  if(fields[6]) { fields[6].value = usersortData.problemB;   autoResizeMemo(fields[6]); }
+  if(fields[7]) { fields[7].value = usersortData.causeB;     autoResizeMemo(fields[7]); }
+}
+
 function showDesk() {
   const current = document.getElementById('sheet-content').getAttribute('data-sheet-id');
   if(current) autoSave(current);
   document.getElementById('home').classList.add('hidden');
   document.getElementById('sheet-view').classList.remove('active');
   document.getElementById('desk-view').classList.add('active');
+  document.getElementById('usersort-page').style.display = 'none';
   closeNav();
   window.scrollTo(0,0);
   loadDeskData();
   renderDesk();
+  loadDeskOverall();
+}
+
+// ===== ユーザー整理モーダル =====
+let usersortData = {
+  groupA:'', groupB:'',
+  rowsA:[], rowsB:[],
+  situationA:'', problemA:'', causeA:'',
+  situationB:'', problemB:'', causeB:''
+};
+
+function usmRowHtml(group, idx, r) {
+  return `<tr>
+    <td><input value="${escHtml(r.attr||'')}"    oninput="usmEdit('${group}',${idx},'attr',this.value)"    placeholder="例：70代女性"></td>
+    <td><input value="${escHtml(r.env||'')}"     oninput="usmEdit('${group}',${idx},'env',this.value)"     placeholder="例：子なし、地方"></td>
+    <td><input value="${escHtml(r.thought||'')}" oninput="usmEdit('${group}',${idx},'thought',this.value)" placeholder="例：迷惑かけたくない"></td>
+    <td><button class="usm-del-row" onclick="delUsmRow('${group}',${idx})">×</button></td>
+  </tr>`;
+}
+
+function renderUsmTable(group) {
+  const rows = group === 'a' ? usersortData.rowsA : usersortData.rowsB;
+  const tbody = document.getElementById(`usm-body-${group}`);
+  if(!tbody) return;
+  tbody.innerHTML = rows.map((r,i) => usmRowHtml(group, i, r)).join('');
+}
+
+function addUsmRow(group) {
+  if(group === 'a') usersortData.rowsA.push({attr:'',env:'',thought:''});
+  else              usersortData.rowsB.push({attr:'',env:'',thought:''});
+  renderUsmTable(group);
+  saveUsersortData();
+  const tbody = document.getElementById(`usm-body-${group}`);
+  if(tbody) { const last = tbody.lastElementChild; if(last) last.querySelector('input').focus(); }
+}
+
+function delUsmRow(group, idx) {
+  if(group === 'a') usersortData.rowsA.splice(idx,1);
+  else              usersortData.rowsB.splice(idx,1);
+  renderUsmTable(group);
+  saveUsersortData();
+}
+
+function usmEdit(group, idx, field, val) {
+  const rows = group === 'a' ? usersortData.rowsA : usersortData.rowsB;
+  if(rows[idx]) rows[idx][field] = val;
+  saveUsersortData();
+}
+
+function openUsersort() {
+  try { usersortData = JSON.parse(localStorage.getItem('usersort_data')) || usersortData; } catch(e){}
+  if(!usersortData.rowsA || usersortData.rowsA.length===0) usersortData.rowsA = [{attr:'',env:'',thought:''}];
+  if(!usersortData.rowsB || usersortData.rowsB.length===0) usersortData.rowsB = [{attr:'',env:'',thought:''}];
+  document.getElementById('usm-group-a').value     = usersortData.groupA     || '';
+  document.getElementById('usm-group-b').value     = usersortData.groupB     || '';
+  document.getElementById('usm-situation-a').value = usersortData.situationA || '';
+  document.getElementById('usm-problem-a').value   = usersortData.problemA   || '';
+  document.getElementById('usm-cause-a').value     = usersortData.causeA     || '';
+  document.getElementById('usm-situation-b').value = usersortData.situationB || '';
+  document.getElementById('usm-problem-b').value   = usersortData.problemB   || '';
+  document.getElementById('usm-cause-b').value     = usersortData.causeB     || '';
+  renderUsmTable('a');
+  renderUsmTable('b');
+  // textarea高さ復元
+  ['usm-situation-a','usm-problem-a','usm-cause-a','usm-situation-b','usm-problem-b','usm-cause-b'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el && el.value){ el.style.height='auto'; el.style.height=el.scrollHeight+'px'; }
+  });
+  document.getElementById('usersort-backdrop').classList.add('open');
+}
+
+function closeUsersort() {
+  saveUsersortData();
+  document.getElementById('usersort-backdrop').classList.remove('open');
+}
+
+function saveUsersortData() {
+  const g = (id) => document.getElementById(id)?.value || '';
+  usersortData.groupA     = g('usm-group-a');
+  usersortData.groupB     = g('usm-group-b');
+  usersortData.situationA = g('usm-situation-a');
+  usersortData.problemA   = g('usm-problem-a');
+  usersortData.causeA     = g('usm-cause-a');
+  usersortData.situationB = g('usm-situation-b');
+  usersortData.problemB   = g('usm-problem-b');
+  usersortData.causeB     = g('usm-cause-b');
+  localStorage.setItem('usersort_data', JSON.stringify(usersortData));
+}
+
+function applyUsersort() {
+  saveUsersortData();
+  // ラベル反映
+  const la = document.getElementById('s00-label-a');
+  const lb = document.getElementById('s00-label-b');
+  if(la) la.textContent = usersortData.groupA || 'グループ A';
+  if(lb) lb.textContent = usersortData.groupB || 'グループ B';
+  // 仮説3項目を s00 の textarea に反映（上書き）
+  const fields = document.querySelectorAll('#sheet-content .field-area');
+  // s00のfield-areaは順番に: 探求する問い, なぜこの問いを, A状況, A課題, A原因, B状況, B課題, B原因, 仮説が崩れたとき
+  if(fields[2]) { fields[2].value = usersortData.situationA; autoResizeMemo(fields[2]); }
+  if(fields[3]) { fields[3].value = usersortData.problemA;   autoResizeMemo(fields[3]); }
+  if(fields[4]) { fields[4].value = usersortData.causeA;     autoResizeMemo(fields[4]); }
+  if(fields[5]) { fields[5].value = usersortData.situationB; autoResizeMemo(fields[5]); }
+  if(fields[6]) { fields[6].value = usersortData.problemB;   autoResizeMemo(fields[6]); }
+  if(fields[7]) { fields[7].value = usersortData.causeB;     autoResizeMemo(fields[7]); }
+  document.getElementById('usersort-backdrop').classList.remove('open');
+}
+
+function usersortBackdropClick(e) {
+  if(e.target === document.getElementById('usersort-backdrop')) closeUsersort();
 }
 
 function autoResizeMemo(el) {
@@ -1452,6 +1996,8 @@ function showSheet(id) {
   const current = document.getElementById('sheet-content').getAttribute('data-sheet-id');
   if(current) autoSave(current);
   document.getElementById('home').classList.add('hidden');
+  document.getElementById('desk-view').classList.remove('active');
+  document.getElementById('usersort-page').style.display = 'none';
   const view = document.getElementById('sheet-view');
   view.classList.add('active');
   document.getElementById('sheet-content').innerHTML = sheets[id];
@@ -1473,6 +2019,16 @@ function showSheet(id) {
   if(memo && memo.value) {
     memo.style.height = 'auto';
     memo.style.height = memo.scrollHeight + 'px';
+  }
+  // s00：ユーザーグループラベルを復元
+  if(id === 's00') {
+    try {
+      const ud = JSON.parse(localStorage.getItem('usersort_data')) || {};
+      const la = document.getElementById('s00-label-a');
+      const lb = document.getElementById('s00-label-b');
+      if(la && ud.groupA) la.textContent = ud.groupA;
+      if(lb && ud.groupB) lb.textContent = ud.groupB;
+    } catch(e){}
   }
 }
 
@@ -1548,25 +2104,6 @@ window.addEventListener('DOMContentLoaded', () => {
     el.value = savedTag;
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
-  }
-
-  // スマホのみモバイルナビを表示
-  const mobileNav = document.getElementById('mobile-nav');
-  if(mobileNav && window.innerWidth <= 768) mobileNav.style.display = 'block';
-
-  // 初回訪問時のみdefault.jsonを自動読み込み
-  if(!localStorage.getItem('default_loaded')) {
-    fetch('default.json')
-      .then(r => { if(!r.ok) throw new Error(); return r.json(); })
-      .then(data => {
-        if(data.project) { document.getElementById('project-name').value=data.project; localStorage.setItem('project_name', data.project); }
-        if(data.tagline) { document.getElementById('project-tagline').value=data.tagline; }
-        if(data.sheets) Object.keys(data.sheets).forEach(id => localStorage.setItem('sheet_'+id, JSON.stringify(data.sheets[id])));
-        if(data.deskGroups) localStorage.setItem('desk_groups', JSON.stringify(data.deskGroups));
-        if(data.deskUnclassified) localStorage.setItem('desk_unclassified', JSON.stringify(data.deskUnclassified));
-        localStorage.setItem('default_loaded', '1');
-      })
-      .catch(() => {});
   }
 });
 </script>
