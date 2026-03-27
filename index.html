@@ -46,6 +46,7 @@
   #overlay { display: none !important; }
 
   @media (max-width: 768px) {
+    #home-menu { display: block !important; }
     #nav-toggle {
       display: flex; position: fixed; top: 12px; left: 12px; z-index: 200;
       background: var(--sakura-deep); color: #fff;
@@ -711,8 +712,9 @@
     <a class="sidebar-link" onclick="showSheet('s12')"><span class="sidebar-step-num">12</span>アイデアの収束・選定</a>
     <a class="sidebar-link" onclick="showSheet('s13')"><span class="sidebar-step-num">13</span>ユーザーストーリーマップ</a>
   </div>
-  <div class="sidebar-section" style="padding:16px 24px;">
-    <button class="btn" onclick="saveProject()" style="width:100%;font-size:12px;">保存する</button>
+  <div class="sidebar-section" style="padding:16px 24px;text-align:center;">
+    <button class="btn" onclick="saveProject()" style="width:100%;font-size:12px;">プロジェクトを保存する</button>
+    <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:6px;">入力内容をブラウザに保存します</div>
   </div>
 </nav>
 
@@ -741,7 +743,51 @@
         style="border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:14px;color:var(--ink-light);background:transparent;width:100%;text-align:left;padding:8px 0;line-height:2;resize:none;overflow:hidden;min-height:44px;"></textarea>
     </div>
 
-    <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">保存する</button>
+    <div style="margin-bottom:48px;text-align:center;">
+      <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">プロジェクトを保存する</button>
+      <div style="font-size:10px;color:var(--ink-muted);margin-top:8px;">入力内容をブラウザに保存します</div>
+    </div>
+
+    <!-- メニュー一覧（スマホのみ） -->
+    <div id="home-menu" style="text-align:left;margin-top:8px;display:none;">
+      <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:16px;text-align:center;">シート一覧</div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10px;letter-spacing:0.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);">デスクリサーチ</div>
+        <a onclick="showDesk()" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'">デスクリサーチノート</a>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10px;letter-spacing:0.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);">準備</div>
+        <a onclick="showUsersortPage()" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">→</span>ユーザー拡散</a>
+        <a onclick="showSheet('s00')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">00</span>仮説の構造化</a>
+        <a onclick="showSheet('s01')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">01</span>リサーチ計画</a>
+        <a onclick="showSheet('s02')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">02</span>インタビューガイド</a>
+        <a onclick="showSheet('s03')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">03</span>プロトペルソナ</a>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10px;letter-spacing:0.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);">実施</div>
+        <a onclick="showSheet('s04')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">04</span>インタビュー記録</a>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10px;letter-spacing:0.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);">分析・モデリング</div>
+        <a onclick="showSheet('s05')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">05</span>アフィニティダイアグラム</a>
+        <a onclick="showSheet('s06')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">06</span>セグメント分析</a>
+        <a onclick="showSheet('s07')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">07</span>ペルソナ（完成版）</a>
+        <a onclick="showSheet('s08')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">08</span>カスタマージャーニーマップ</a>
+        <a onclick="showSheet('s09')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">09</span>価値マップ</a>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10px;letter-spacing:0.08em;color:var(--ink-muted);text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border);">Module D — アイデア</div>
+        <a onclick="showSheet('s10')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">10</span>インサイトの整理</a>
+        <a onclick="showSheet('s11')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">11</span>HMW問い・アイデア発散</a>
+        <a onclick="showSheet('s12')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">12</span>アイデアの収束・選定</a>
+        <a onclick="showSheet('s13')" style="display:block;padding:8px 4px;font-size:13px;color:var(--ink-light);cursor:pointer;border-bottom:1px solid var(--rule);text-decoration:none;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--ink-light)'"><span style="font-family:'Montserrat',sans-serif;font-size:10px;color:var(--ink-muted);margin-right:8px;">13</span>ユーザーストーリーマップ</a>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -810,6 +856,7 @@
 <div id="usersort-page" style="display:none;">
   <div class="print-bar">
     <button class="btn btn-ghost" onclick="closeUsersortPage()">← 仮説の構造化に戻る</button>
+    <button class="btn btn-ghost" onclick="window.print()">印刷</button>
   </div>
   <div class="desk-wrap" style="max-width:720px;margin-left:auto;margin-right:auto;">
     <div class="desk-title">ユーザーを整理する</div>
@@ -863,6 +910,30 @@
       </div>
     </div>
 
+    <!-- 気づき・バイアス -->
+    <div style="margin-top:36px;border-top:1px dashed var(--border);padding-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div>
+        <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">気づき</div>
+        <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px;line-height:1.4;">データや人を見て発見したこと。外から来るもの。</div>
+        <textarea id="usp-memo"
+          oninput="autoResizeMemo(this);saveUsersortData()"
+          placeholder="書き散らかしながら湧いてきたこと。"
+          style="width:100%;border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:11px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:80px;line-height:1.5;padding:4px 0;transition:border-color 0.15s;"
+          onfocus="this.style.borderBottomColor='var(--accent)'"
+          onblur="this.style.borderBottomColor='var(--rule)'"></textarea>
+      </div>
+      <div>
+        <div style="font-size:10px;font-family:'Montserrat',sans-serif;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:6px;">自分のバイアス</div>
+        <div style="font-size:10px;color:var(--ink-muted);margin-bottom:8px;line-height:1.4;">自分がすでに持っている前提。内側にあるもの。</div>
+        <textarea id="usp-bias"
+          oninput="autoResizeMemo(this);saveUsersortData()"
+          placeholder="自分はこう信じている。インタビュー前に吐き出す。"
+          style="width:100%;border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:11px;color:var(--ink-light);background:transparent;resize:none;overflow:hidden;min-height:80px;line-height:1.5;padding:4px 0;transition:border-color 0.15s;"
+          onfocus="this.style.borderBottomColor='var(--accent)'"
+          onblur="this.style.borderBottomColor='var(--rule)'"></textarea>
+      </div>
+    </div>
+
     <!-- 反映ボタン -->
     <div style="margin-top:32px;display:flex;justify-content:flex-end;">
       <button class="btn" onclick="applyUsersortPage()" style="font-size:12px;padding:10px 24px;">仮説の構造化シートに反映する</button>
@@ -891,9 +962,9 @@ function sheetHeader(step, title) {
   </div>`;
 }
 
-function field(label, rows=1, placeholder='') {
-  if(rows===1) return `<div class="field"><div class="field-label">${label}</div><input class="field-line" placeholder="${placeholder}"></div>`;
-  return `<div class="field"><div class="field-label">${label}</div><textarea class="field-area" rows="${rows}" placeholder="${placeholder}"></textarea></div>`;
+function field(label, rows=1, placeholder='', style='') {
+  if(rows===1) return `<div class="field"><div class="field-label">${label}</div><input class="field-line" placeholder="${placeholder}" style="${style}"></div>`;
+  return `<div class="field"><div class="field-label">${label}</div><textarea class="field-area" rows="${rows}" placeholder="${placeholder}" style="${style}"></textarea></div>`;
 }
 
 function lines(label, n, placeholder='') {
@@ -951,7 +1022,7 @@ ${field('なぜこの問いを立てるのか（問いの背景・動機）', 2)
 <div class="note-box">仮説の根拠を明示する。自分の経験・観察・先行事例・直感——何でもいい。ただし「根拠なし」も書いてよい。</div>
 <div class="grid-2">
   ${lines('仮説の根拠・出所', 4, '例：自分の周囲の20代の反応を見ていて')}
-  ${lines('自分のバイアスになりそうなもの（確証バイアスに注意）', 4, '例：寺院出身者として「お寺は良い場所」という前提がある')}
+  ${field('自分のバイアスになりそうなもの（確証バイアスに注意）', 8, '例：寺院出身者として「お寺は良い場所」という前提がある', 'font-size:11px;line-height:1.5;')}
 </div>
 
 <div class="section-title">仮説が崩れたとき</div>
@@ -1783,6 +1854,17 @@ function showUsersortPage() {
   document.getElementById('usp-situation-b').value = usersortData.situationB || '';
   document.getElementById('usp-problem-b').value   = usersortData.problemB   || '';
   document.getElementById('usp-cause-b').value     = usersortData.causeB     || '';
+  // メモ復元
+  const memoEl = document.getElementById('usp-memo');
+  if(memoEl) {
+    memoEl.value = usersortData.memo || '';
+    if(memoEl.value){ memoEl.style.height='auto'; memoEl.style.height=memoEl.scrollHeight+'px'; }
+  }
+  const biasEl = document.getElementById('usp-bias');
+  if(biasEl) {
+    biasEl.value = usersortData.bias || '';
+    if(biasEl.value){ biasEl.style.height='auto'; biasEl.style.height=biasEl.scrollHeight+'px'; }
+  }
   // ラベル更新
   const la = document.getElementById('usp-label-a');
   const lb = document.getElementById('usp-label-b');
@@ -1850,7 +1932,8 @@ let usersortData = {
   groupA:'', groupB:'',
   rowsA:[], rowsB:[],
   situationA:'', problemA:'', causeA:'',
-  situationB:'', problemB:'', causeB:''
+  situationB:'', problemB:'', causeB:'',
+  memo:'', bias:''
 };
 
 function usmRowHtml(group, idx, r) {
@@ -1920,14 +2003,16 @@ function closeUsersort() {
 
 function saveUsersortData() {
   const g = (id) => document.getElementById(id)?.value || '';
-  usersortData.groupA     = g('usm-group-a');
-  usersortData.groupB     = g('usm-group-b');
-  usersortData.situationA = g('usm-situation-a');
-  usersortData.problemA   = g('usm-problem-a');
-  usersortData.causeA     = g('usm-cause-a');
-  usersortData.situationB = g('usm-situation-b');
-  usersortData.problemB   = g('usm-problem-b');
-  usersortData.causeB     = g('usm-cause-b');
+  usersortData.groupA     = g('usp-group-a')     || g('usm-group-a');
+  usersortData.groupB     = g('usp-group-b')     || g('usm-group-b');
+  usersortData.situationA = g('usp-situation-a') || g('usm-situation-a');
+  usersortData.problemA   = g('usp-problem-a')   || g('usm-problem-a');
+  usersortData.causeA     = g('usp-cause-a')     || g('usm-cause-a');
+  usersortData.situationB = g('usp-situation-b') || g('usm-situation-b');
+  usersortData.problemB   = g('usp-problem-b')   || g('usm-problem-b');
+  usersortData.causeB     = g('usp-cause-b')     || g('usm-cause-b');
+  usersortData.memo       = g('usp-memo');
+  usersortData.bias       = g('usp-bias');
   localStorage.setItem('usersort_data', JSON.stringify(usersortData));
 }
 
