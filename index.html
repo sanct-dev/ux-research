@@ -511,7 +511,33 @@
         style="border:none;border-bottom:1px solid var(--rule);outline:none;font-family:'Kaisei Opti',sans-serif;font-size:14px;color:var(--ink-light);background:transparent;width:100%;text-align:left;padding:8px 0;line-height:2;resize:none;overflow:hidden;min-height:44px;"></textarea>
     </div>
 
-    <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">保存する</button>
+    <button onclick="saveProject()" class="btn" style="font-size:13px;padding:12px 40px;">プロジェクトを保存する</button>
+    <div style="margin-top:10px;font-size:11px;color:var(--ink-muted);line-height:1.7;">入力内容をファイルに書き出します。次回は「読み込む」から再開できます。</div>
+
+    <!-- スマホ用ナビゲーション -->
+    <div id="mobile-nav" style="display:none;margin-top:48px;border-top:1px solid var(--border);padding-top:32px;text-align:left;">
+      <div style="font-size:11px;color:var(--ink-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;">メニュー</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button onclick="showDesk()" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          デスクリサーチノート
+        </button>
+        <button onclick="showSheet('s00')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">00</span>仮説の構造化</button>
+        <button onclick="showSheet('s01')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">01</span>リサーチ計画</button>
+        <button onclick="showSheet('s02')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">02</span>インタビューガイド</button>
+        <button onclick="showSheet('s03')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">03</span>プロトペルソナ</button>
+        <button onclick="showSheet('s04')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">04</span>インタビュー記録</button>
+        <button onclick="showSheet('s05')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">05</span>アフィニティダイアグラム</button>
+        <button onclick="showSheet('s06')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">06</span>セグメント分析</button>
+        <button onclick="showSheet('s07')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">07</span>ペルソナ（完成版）</button>
+        <button onclick="showSheet('s08')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">08</span>カスタマージャーニーマップ</button>
+        <button onclick="showSheet('s09')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">09</span>価値マップ</button>
+        <button onclick="showSheet('s10')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">10</span>インサイトの整理</button>
+        <button onclick="showSheet('s11')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">11</span>HMW問い・アイデア発散</button>
+        <button onclick="showSheet('s12')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">12</span>アイデアの収束・選定</button>
+        <button onclick="showSheet('s13')" style="display:flex;align-items:center;gap:12px;background:var(--bg-sheet);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-family:inherit;font-size:13px;color:var(--ink);cursor:pointer;text-align:left;width:100%;"><span style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:var(--accent);width:24px;flex-shrink:0;">13</span>ユーザーストーリーマップ</button>
+      </div>
+    </div>
 
   </div>
 </div>
@@ -1523,6 +1549,10 @@ window.addEventListener('DOMContentLoaded', () => {
     el.style.height = 'auto';
     el.style.height = el.scrollHeight + 'px';
   }
+
+  // スマホのみモバイルナビを表示
+  const mobileNav = document.getElementById('mobile-nav');
+  if(mobileNav && window.innerWidth <= 768) mobileNav.style.display = 'block';
 
   // 初回訪問時のみdefault.jsonを自動読み込み
   if(!localStorage.getItem('default_loaded')) {
